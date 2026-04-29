@@ -11,8 +11,8 @@
 
         <!-- Desktop Menu -->
         <div class="hidden md:flex items-center gap-8">
-            <a href="#about" class="nav-link">Tentang Kami</a>
-            <a href="#diagnose" class="nav-link">Diagnosis</a>
+            <a href="{{ route('home') }}" class="nav-link">Tentang Kami</a>
+            <a href="{{ route('diagnosis.index') }}" class="nav-link">Diagnosis</a>
             <a href="#hubs" class="nav-link">Fixora Hub</a>
             <a href="#technicians" class="nav-link">Teknisi</a>
         </div>
@@ -37,8 +37,8 @@
 
         <div class="flex flex-col gap-4 mt-3 bg-white/80 backdrop-blur-lg p-4 rounded-2xl shadow-lg border border-emerald-100">
 
-            <a href="#about" class="mobile-link">Tentang Kami</a>
-            <a href="#diagnose" class="mobile-link">Diagnosis</a>
+            <a href="{{ route('home') }}" class="mobile-link">Tentang Kami</a>
+            <a href="{{ route('diagnosis.index') }}" class="mobile-link">Diagnosis</a>
             <a href="#hubs" class="mobile-link">Fixora Hub</a>
             <a href="#technicians" class="mobile-link">Teknisi</a>
 

@@ -1,0 +1,68 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Models\Technician;
+use App\Models\Booking;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Log; // Tambahkan ini untuk debugging
+
+class BookingController extends Controller
+{
+    public function index(Request $request)
+    {
+        $diagnosis = [
+            'diag_id' => $request->query('diag_id'),
+            'device_name' => $request->query('device_name'),
+            'category' => $request->query('category'),
+        ];
+
+        $technicians = Technician::with('user')
+            ->where('is_available', true)
+            ->orderBy('rating', 'desc')
+            ->get();
+
+        return view('user.teknisi', compact('technicians', 'diagnosis'));
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'technician_id' => 'required',
+            'diag_id' => 'required',
+            'schedule' => 'required',
+            'address' => 'required|string|min:10',
+        ]);
+
+        try {
+            $bookingId = 'BK-' . date('Ymd') . '-' . strtoupper(Str::random(4));
+
+            $booking = new Booking();
+            $booking->booking_id = $bookingId;
+            $booking->technician_id = $request->technician_id;
+            $booking->diag_id = $request->diag_id;
+            $booking->schedule = $request->schedule;
+            $booking->address = $request->address;
+            $booking->status = 'pending';
+            
+            $booking->save();
+
+            return redirect()->route('booking.success', ['booking_id' => $booking->booking_id])
+                             ->with('success', 'Booking berhasil dibuat!');
+
+        } catch (\Exception $e) {
+            Log::error("Booking Error: " . $e->getMessage());
+            return back()->withInput()->with('error', 'Gagal menyimpan booking: ' . $e->getMessage());
+        }
+    }
+
+    public function success($booking_id)
+    {
+        $booking = Booking::where('booking_id', $booking_id)
+            ->with('technician.user')
+            ->firstOrFail();
+
+        return view('user.diagnosis', compact('booking'))->with('success', 'Booking berhasil dibuat!'); 
+    }
+}

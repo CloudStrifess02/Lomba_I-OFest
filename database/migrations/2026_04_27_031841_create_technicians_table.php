@@ -15,10 +15,10 @@ return new class extends Migration
             $table->id();
 
             // Relasi ke users (1 user = 1 technician profile)
-            $table->foreignId('user_id')
-                  ->unique()
-                  ->constrained()
-                  ->onDelete('cascade');
+            // $table->foreignId('user_id')
+            //       ->unique()
+            //       ->constrained()
+            //       ->onDelete('cascade');
 
             // Info teknisi / toko
             $table->string('shop_name')->nullable();

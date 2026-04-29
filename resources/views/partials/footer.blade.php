@@ -1,4 +1,4 @@
-<footer class="bg-gradient-to-br from-emerald-900 via-green-900 to-emerald-800 text-emerald-100 mt-20">
+<footer class="bg-gradient-to-br from-emerald-900 via-green-900 to-emerald-800 text-emerald-100">
 
     <div class="h-[1px] bg-gradient-to-r from-transparent via-emerald-500 to-transparent opacity-40"></div>
 

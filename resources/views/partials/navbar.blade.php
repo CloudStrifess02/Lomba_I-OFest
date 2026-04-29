@@ -14,6 +14,7 @@
             <a href="#about" class="nav-link">Tentang Kami</a>
             <a href="#diagnose" class="nav-link">Diagnosis</a>
             <a href="#hubs" class="nav-link">Fixora Hub</a>
+            <a href="{{ route('marketplace.index') }}" class="nav-link">Marketplace</a>
             <a href="#technicians" class="nav-link">Teknisi</a>
         </div>
 
@@ -40,6 +41,7 @@
             <a href="#about" class="mobile-link">Tentang Kami</a>
             <a href="#diagnose" class="mobile-link">Diagnosis</a>
             <a href="#hubs" class="mobile-link">Fixora Hub</a>
+            <a href="{{ route('marketplace.index') }}" class="mobile-link">Marketplace</a>
             <a href="#technicians" class="mobile-link">Teknisi</a>
 
             <button

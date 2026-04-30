@@ -16,12 +16,16 @@ class DiagnosisController extends Controller
             'category' => $request->query('category')
         ];
 
+        $hubs = \App\Models\Toko::where('kategori_toko_id', 2)
+                ->where('is_verified', true) 
+                ->get();
+
         $technicians = Technician::with('user')
             ->where('is_available', true)
             ->orderBy('rating', 'desc')
             ->get();
 
-        return view('user.diagnosis', compact('technicians', 'diagnosis'));
+        return view('user.diagnosis', compact('technicians', 'diagnosis', 'hubs'));
     }
 
     public function analyze(Request $request)

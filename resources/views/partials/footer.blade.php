@@ -20,10 +20,10 @@
         <div class="md:pl-4 border-t border-emerald-800 pt-4 md:border-none md:pt-0">
             <h3 class="text-white font-semibold mb-3 text-sm md:text-base">Navigasi</h3>
             <ul class="space-y-2 text-sm">
-                <li><a href="#about" class="footer-link">Tentang Kami</a></li>
-                <li><a href="#diagnose" class="footer-link">Diagnosis</a></li>
-                <li><a href="#hubs" class="footer-link">Fixora Hub</a></li>
-                <li><a href="#technicians" class="footer-link">Teknisi</a></li>
+                <li><a href="{{ route('home') }}" class="footer-link">Tentang Kami</a></li>
+                <li><a href="{{ route('diagnosis.index') }}" class="footer-link">Diagnosis</a></li>
+                <li><a href="{{ route('fixora-hub.index') }}" class="footer-link">Fixora Hub</a></li>
+                <li><a href="{{ route('marketplace.index') }}" class="footer-link">Teknisi</a></li>
             </ul>
         </div>
 

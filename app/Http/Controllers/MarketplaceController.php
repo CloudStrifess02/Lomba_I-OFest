@@ -10,39 +10,47 @@ class MarketplaceController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Toko::with(['kategori', 'produk']);
+        $query = Toko::with(['kategori', 'produk'])
+            ->whereHas('kategori', function ($q) {
+                $q->where('nama_kategori', 'Jasa Servis');
+            });
 
-        if ($request->search) {
+            if ($request->search) {
             $search = $request->search;
 
             $query->where(function ($q) use ($search) {
-                $q->where('nama_toko', 'like', '%' . $search . '%')
+                $q->where('nama_toko', 'like', "%$search%")
+                    ->orWhere('kota', 'like', "%$search%") // 🔥 TAMBAH INI
                     ->orWhereHas('produk', function ($q2) use ($search) {
-                        $q2->where('nama_produk', 'like', '%' . $search . '%')
-                            ->orWhere('deskripsi_singkat', 'like', '%' . $search . '%');
+                        $q2->where('nama_produk', 'like', "%$search%")
+                            ->orWhere('deskripsi_singkat', 'like', "%$search%");
                     });
             });
         }
-        
-        if ($request->category && $request->category != 'all') {
-            $query->where('kategori_toko_id', $request->category);
+
+        if ($request->kota) {
+            $query->where('kota', $request->kota);
         }
 
-        $stores = $query->get();
-        $categories = KategoriToko::all();
+        $toko = $query->get();
+        $kotaList = Toko::select('kota')->distinct()->pluck('kota');
 
-
-        // Jika request dari AJAX (saat filter berjalan)
         if ($request->ajax()) {
-            $html = view('user.store_cards', compact('stores'))->render();
+            $html = view('user.marketplace.store_cards', compact('toko'))->render();
 
             return response()->json([
                 'html' => $html,
-                'count' => $stores->count()
+                'count' => $toko->count()
             ]);
         }
 
-        // Render pertama kali
-        return view('user.marketplace', compact('stores', 'categories'));
+        return view('user.marketplace.index', compact('toko', 'kotaList'));
+    }
+
+    public function show($id)
+    {
+        $toko = Toko::with(['kategori', 'produk'])->findOrFail($id);
+
+        return view('user.marketplace.detail', compact('toko'));
     }
 }

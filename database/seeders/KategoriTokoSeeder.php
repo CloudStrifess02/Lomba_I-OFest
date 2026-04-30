@@ -18,10 +18,6 @@ class KategoriTokoSeeder extends Seeder
         ]);
 
         KategoriToko::create([
-            'nama_kategori' => 'Suku Cadang',
-        ]);
-
-        KategoriToko::create([
             'nama_kategori' => 'Pengepul Resmi',
         ]);
     }

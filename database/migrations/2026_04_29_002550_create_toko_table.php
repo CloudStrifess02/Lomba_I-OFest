@@ -17,7 +17,8 @@ return new class extends Migration
             $table->foreignId('kategori_toko_id')->constrained('kategori_toko')->onDelete('cascade');
 
             $table->string('nama_toko');
-            $table->string('lokasi');
+            $table->string('alamat');
+            $table->string('kota');
 
             $table->string('foto_cover')->nullable(); 
             $table->string('logo_toko')->nullable();

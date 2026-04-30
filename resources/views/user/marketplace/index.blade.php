@@ -21,46 +21,35 @@
                 </div>
             </div>
 
-            <div
-                class="bg-white/80 backdrop-blur-xl p-3 rounded-full shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-white flex flex-col md:flex-row gap-3 mb-12 relative z-20">
+            <div class="bg-white/80 backdrop-blur-xl p-3 rounded-full shadow border flex flex-col md:flex-row gap-3 mb-12">
 
                 {{-- SEARCH --}}
                 <div class="flex-grow relative flex items-center">
-                    <div
-                        class="w-12 h-12 flex items-center justify-center text-slate-400 absolute left-2 pointer-events-none">
+                    <div class="w-12 h-12 flex items-center justify-center text-slate-400 absolute left-2">
                         <i class="fa-solid fa-magnifying-glass"></i>
                     </div>
-                    <input type="text" id="searchInput" placeholder="Cari nama toko, servis, atau sparepart..."
-                        class="w-full pl-14 pr-6 py-4 bg-transparent text-slate-700 font-medium placeholder-slate-400 focus:outline-none rounded-full transition-all">
+                    <input type="text" id="searchInput" placeholder="Cari nama toko, alamat, atau kota..."
+                        class="w-full pl-14 pr-6 py-4 bg-transparent text-slate-700 font-medium placeholder-slate-400 focus:outline-none rounded-full">
                 </div>
 
+                {{-- DIVIDER --}}
                 <div class="hidden md:block w-px h-10 bg-slate-200 self-center"></div>
 
-                {{-- CATEGORY FILTER --}}
-                <div class="md:w-64 relative flex items-center">
-
-                    {{-- ICON --}}
-                    <i class="fa-solid fa-layer-group absolute left-4 text-slate-400 pointer-events-none"></i>
-
-                    {{-- SELECT --}}
-                    <select id="categoryFilter"
-                        class="w-full pl-14 pr-10 py-4 bg-slate-50/50 hover:bg-slate-100 text-slate-700 font-medium rounded-full focus:outline-none appearance-none cursor-pointer transition-colors border-none">
-
-                        <option value="all">Semua Kategori</option>
-
-                        @foreach ($categories as $cat)
-                            <option value="{{ $cat->id }}">{{ $cat->nama_kategori }}</option>
+                {{-- FILTER KOTA --}}
+                <div class="relative">
+                    <select id="cityFilter"
+                        class="w-full md:w-[200px] px-5 py-4 bg-transparent text-slate-700 font-medium focus:outline-none rounded-full border border-slate-200">
+                        <option value="">Semua Kota</option>
+                        @foreach ($kotaList as $kota)
+                            <option value="{{ $kota }}">{{ $kota }}</option>
                         @endforeach
-
                     </select>
-
-                    {{-- ARROW --}}
-                    <i class="fa-solid fa-chevron-down absolute right-5 text-slate-400 text-xs pointer-events-none"></i>
                 </div>
+
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 relative" id="storeContainer">
-                @include('user.store_cards')
+                @include('user.marketplace.store_cards')
             </div>
 
             <div id="loadingIndicator" class="hidden text-center py-10">
@@ -69,7 +58,7 @@
             </div>
 
             <div id="noDataMessage"
-                class="{{ $stores->isEmpty() ? '' : 'hidden' }} text-center py-20 bg-white rounded-[32px] mt-8 border border-slate-100 shadow-sm">
+                class="{{ $toko->isEmpty() ? '' : 'hidden' }} text-center py-20 bg-white rounded-[32px] mt-8 border border-slate-100 shadow-sm">
                 <div class="text-slate-200 text-7xl mb-6"><i class="fa-solid fa-magnifying-glass-location"></i></div>
                 <h3 class="text-2xl font-extrabold text-slate-700 mb-2">Toko Tidak Ditemukan</h3>
                 <p class="text-slate-500 max-w-md mx-auto">Kami tidak dapat menemukan mitra yang sesuai dengan pencarian
@@ -86,14 +75,14 @@
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const searchInput = document.getElementById('searchInput');
-            const categoryFilter = document.getElementById('categoryFilter');
             const storeContainer = document.getElementById('storeContainer');
             const noDataMessage = document.getElementById('noDataMessage');
             const loadingIndicator = document.getElementById('loadingIndicator');
+            const cityFilter = document.getElementById('cityFilter');
 
             function fetchStores() {
                 const search = searchInput.value;
-                const category = categoryFilter.value;
+                const kota = cityFilter.value;
 
                 // Tampilkan loading, sembunyikan container & no data
                 storeContainer.style.opacity = '0.5';
@@ -102,7 +91,7 @@
 
                 // Gunakan Fetch API untuk memanggil Controller
                 // Pastikan route '/marketplace' sesuai dengan penamaan route kamu di web.php
-                fetch(`/marketplace?search=${encodeURIComponent(search)}&category=${encodeURIComponent(category)}`, {
+                fetch(`/marketplace?search=${encodeURIComponent(search)}&kota=${encodeURIComponent(kota)}`, {
                         headers: {
                             'X-Requested-With': 'XMLHttpRequest', // Memberitahu Laravel ini request AJAX
                             'Accept': 'application/json'
@@ -139,13 +128,13 @@
                 }, 500); // Tunggu 0.5 detik setelah berhenti mengetik
             });
 
-            // Trigger fetch langsung saat dropdown diubah
-            categoryFilter.addEventListener('change', fetchStores);
+            cityFilter.addEventListener('change', function() {
+                fetchStores();
+            });
 
             // Fungsi Reset
             window.resetFilters = function() {
                 searchInput.value = '';
-                categoryFilter.value = 'all';
                 fetchStores();
             }
         });

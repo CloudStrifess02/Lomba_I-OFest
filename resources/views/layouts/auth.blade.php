@@ -7,7 +7,7 @@
     <title>@yield('title', 'Fixora') – Fixora</title>
 
     {{-- Tailwind CSS CDN --}}
-    <script src="https://cdn.tailwindcss.com"></script>
+    {{-- <script src="https://cdn.tailwindcss.com"></script> --}}
 
     {{-- Google Fonts --}}
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
@@ -43,10 +43,8 @@
     </script>
 
     <style>
-        /* Custom styles that Tailwind CDN can't generate inline */
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
 
-        /* Input focus ring */
         .form-control:focus {
             border-color: #4CAF50;
             box-shadow: 0 0 0 3px rgba(76,175,80,.15);
@@ -54,13 +52,11 @@
         }
         .form-control.is-invalid { border-color: #EF5350; }
 
-        /* Password strength bars */
         .strength-bar span {
             flex: 1; height: 3px; border-radius: 99px;
             background: #E0E0E0; transition: background .3s;
         }
 
-        /* Latar Belakang Gradien Utama */
         .main-bg {
             background:
                 radial-gradient(ellipse 70% 60% at 65% 25%, rgba(187,247,208,.55) 0%, transparent 70%),
@@ -68,29 +64,21 @@
                 #f8fdfb;
         }
 
-        /* Eye button */
         .eye-btn svg { width: 17px; height: 17px; fill: none; stroke: currentColor;
             stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
-        /* Nav/trust SVG icons */
         .icon-stroke { fill: none; stroke: currentColor;
             stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
     </style>
 </head>
 
-{{-- REVISI: Latar belakang gradien diletakkan di body agar full screen --}}
 <body class="min-h-screen flex flex-col main-bg relative overflow-x-hidden">
 
 <div class="flex-1 flex flex-col justify-center items-center min-h-screen p-6 py-16">
 
-    {{-- ══════════════════════════════════════
-         MAIN CONTAINER (Bungkus Tengah)
-    ══════════════════════════════════════ --}}
+
     <div class="w-full max-w-[1100px] flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-20 z-10">
 
-        {{-- ══════════════════════════════════════
-             KIRI — Teks & Fitur
-        ══════════════════════════════════════ --}}
         <div class="flex flex-col flex-1 w-full max-w-lg lg:pr-10">
 
             {{-- Logo --}}
@@ -154,14 +142,11 @@
 
         </div>
 
-        {{-- ══════════════════════════════════════
-             KANAN — Form Area (Menjadi Card Melayang)
-        ══════════════════════════════════════ --}}
+
         <div class="w-full lg:w-[460px] shrink-0 bg-white rounded-[2rem] p-8 lg:p-10 border border-emerald-50"
              style="box-shadow: 0 20px 40px rgba(0,0,0,.04), 0 1px 3px rgba(0,0,0,.02);">
             
             <div class="w-full">
-                {{-- Form dari login.blade akan masuk ke sini --}}
                 @yield('form')
             </div>
 
@@ -169,7 +154,6 @@
 
     </div>
 
-    {{-- Trust bar (Dipindah ke bawah pojok kiri) --}}
     <div class="absolute bottom-6 left-6 lg:left-12 z-10 flex gap-6 flex-wrap opacity-70">
         <div class="flex items-center gap-2 text-xs font-semibold text-gray-700">
             <svg class="w-4 h-4 text-fixora icon-stroke" viewBox="0 0 24 24">
@@ -197,17 +181,13 @@
 
 </div>
 
-{{-- ══════════════════════════════════════
-     GLOBAL CSS HELPERS (used by form partials)
-══════════════════════════════════════ --}}
+
 <style>
-    /* Card (menyesuaikan agar tidak ganda kotaknya) */
-    .card       { width: 100%; } /* Dihapus batas max-width agar mengikuti kotak putih luar */
+    .card       { width: 100%; } 
     .card-title { font-size: 1.5rem; font-weight: 800; text-align: center; color: #1a1a1a; margin-bottom: 4px; }
     .card-title .accent { color: #2E7D32; }
     .card-sub   { font-size: 13.5px; text-align: center; color: #757575; margin-bottom: 28px; }
 
-    /* Sisanya biarkan sama seperti sebelumnya */
     .alert          { padding: 12px 16px; border-radius: 10px; font-size: 13.5px; font-weight: 500; margin-bottom: 16px; }
     .alert-error    { background: #FFEBEE; color: #C62828; border: 1px solid #EF9A9A; }
     .alert-success  { background: #E8F5E9; color: #2E7D32; border: 1px solid #A5D6A7; }
@@ -251,7 +231,6 @@
     .register-link a:hover { text-decoration: underline; }
 </style>
 
-{{-- Password toggle JS --}}
 <script>
     function togglePassword(inputId, btn) {
         const input  = document.getElementById(inputId);

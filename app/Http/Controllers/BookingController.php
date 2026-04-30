@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Technician;
 use App\Models\Booking;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Log; // Tambahkan ini untuk debugging
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth; 
 
 class BookingController extends Controller
 {
@@ -28,10 +29,14 @@ class BookingController extends Controller
 
     public function store(Request $request)
     {
+        if (!Auth::check()) {
+            return redirect()->route('login')->with('error', 'Silakan login terlebih dahulu untuk melakukan booking.');
+        }
+
         $request->validate([
-            'technician_id' => 'required',
+            'technician_id' => 'required|exists:technicians,id',
             'diag_id' => 'required',
-            'schedule' => 'required',
+            'schedule' => 'required|date|after:now',
             'address' => 'required|string|min:10',
         ]);
 
@@ -40,6 +45,9 @@ class BookingController extends Controller
 
             $booking = new Booking();
             $booking->booking_id = $bookingId;
+            
+            $booking->user_id = Auth::id(); 
+            
             $booking->technician_id = $request->technician_id;
             $booking->diag_id = $request->diag_id;
             $booking->schedule = $request->schedule;
@@ -60,7 +68,8 @@ class BookingController extends Controller
     public function success($booking_id)
     {
         $booking = Booking::where('booking_id', $booking_id)
-            ->with('technician.user')
+            ->where('user_id', Auth::id()) 
+            ->with(['technician.user', 'user'])
             ->firstOrFail();
 
         return view('user.diagnosis', compact('booking'))->with('success', 'Booking berhasil dibuat!'); 

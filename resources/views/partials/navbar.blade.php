@@ -1,8 +1,10 @@
-<nav class="fixed top-0 left-0 right-0 z-[200] bg-white/70 backdrop-blur-xl border-b border-emerald-100 shadow-[0_4px_20px_rgba(0,0,0,0.04)]">
+<nav
+    class="fixed top-0 left-0 right-0 z-[200] bg-white/70 backdrop-blur-xl border-b border-emerald-100 shadow-[0_4px_20px_rgba(0,0,0,0.04)]">
     <div class="flex items-center justify-between px-[6%] h-[70px]">
 
         <a href="{{ route('home') }}" class="flex items-center gap-3 font-['Syne'] font-extrabold text-xl">
-            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-green-600 flex items-center justify-center text-white shadow-md">
+            <div
+                class="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-green-600 flex items-center justify-center text-white shadow-md">
                 <i class="fa-solid fa-rotate"></i>
             </div>
             <span class="text-emerald-600 tracking-tight">Fixora</span>
@@ -16,13 +18,26 @@
         </div>
 
         <div class="hidden md:flex items-center">
-            <a href="{{ route('login') }}"
-                class="bg-gradient-to-r from-emerald-500 to-green-600 text-white px-6 py-2.5 rounded-full font-semibold text-sm shadow-lg shadow-emerald-500/20 hover:shadow-xl hover:scale-[0.97] transition-all flex items-center gap-2 cursor-pointer">
-                Masuk / Daftar <i class="fa-solid fa-arrow-right text-xs"></i>
-            </a>
+            @guest
+                <a href="{{ route('login') }}"
+                    class="bg-gradient-to-r from-emerald-500 to-green-600 text-white px-6 py-2.5 rounded-full font-semibold text-sm shadow-lg shadow-emerald-500/20 hover:shadow-xl hover:scale-[0.97] transition-all flex items-center gap-2 cursor-pointer">
+                    Masuk / Daftar <i class="fa-solid fa-arrow-right text-xs"></i>
+                </a>
+            @endguest
+
+            @auth
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit"
+                        class="border border-red-200 text-red-600 hover:bg-red-50 px-6 py-2.5 rounded-full font-semibold text-sm transition-all flex items-center gap-2 cursor-pointer">
+                        Keluar <i class="fa-solid fa-right-from-bracket text-xs"></i>
+                    </button>
+                </form>
+            @endauth
         </div>
 
-        <button onclick="toggleMenu()" class="md:hidden text-2xl text-emerald-600 transition transition-all cursor-pointer">
+        <button onclick="toggleMenu()"
+            class="md:hidden text-2xl text-emerald-600 transition transition-all cursor-pointer">
             <i id="hamburgerIcon" class="fa-solid fa-bars"></i>
         </button>
 
@@ -31,7 +46,8 @@
     <div id="mobileMenu"
         class="hidden md:hidden px-[6%] pb-4 transition-all duration-300 origin-top scale-y-95 opacity-0">
 
-        <div class="flex flex-col gap-4 mt-3 bg-white/80 backdrop-blur-lg p-4 rounded-2xl shadow-lg border border-emerald-100">
+        <div
+            class="flex flex-col gap-4 mt-3 bg-white/80 backdrop-blur-lg p-4 rounded-2xl shadow-lg border border-emerald-100">
 
             <a href="{{ route('home') }}" class="mobile-link">Tentang Kami</a>
             <a href="{{ route('diagnosis.index') }}" class="mobile-link">Diagnosis</a>

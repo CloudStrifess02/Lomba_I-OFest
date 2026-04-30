@@ -13,16 +13,11 @@ class LoginController extends Controller
 {
     public function showLoginForm()
     {
-        // Ganti titik dengan garis miring (slash)
         return view('user.login'); 
     }
 
-    /**
-     * Handle Login
-     */
     public function login(Request $request)
     {
-        // Validasi input
         $credentials = $request->validate([
             'email'    => ['required', 'email'],
             'password' => ['required', 'string'],
@@ -32,10 +27,8 @@ class LoginController extends Controller
             'password.required' => 'Password wajib diisi.',
         ]);
 
-        // Attempt login
         if (Auth::attempt($credentials, $request->boolean('remember'))) {
 
-            // Regenerate session (security)
             $request->session()->regenerate();
 
             return redirect()->intended(route('dashboard'));
@@ -47,22 +40,16 @@ class LoginController extends Controller
         ]);
     }
 
-    /**
-     * Logout
-     */
     public function logout(Request $request)
     {
         Auth::logout();
 
-        // Hapus session
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
         return redirect()->route('login');
     }
-    /**
-     * Redirect to Google
-     */
+  
     public function redirectToGoogle()
     {
         return Socialite::driver('google')->redirect();
@@ -90,7 +77,6 @@ class LoginController extends Controller
                 ]);
             }
 
-            // Otomatis login
             Auth::login($user);
 
             return redirect()->intended(route('dashboard'));

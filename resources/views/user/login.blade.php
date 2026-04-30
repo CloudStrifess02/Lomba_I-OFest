@@ -20,10 +20,8 @@
 <body class="min-h-screen flex flex-col main-bg relative overflow-x-hidden">
 
 <div class="flex-1 flex flex-col justify-center items-center min-h-screen p-6 py-16">
-    {{-- Lebar Kontainer Utama Diperbesar dari 1100px ke 1300px --}}
     <div class="w-full max-w-[1300px] flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-24 z-10">
 
-        {{-- ═════ BAGIAN KIRI (TEKS) ═════ --}}
         <div class="flex flex-col flex-1 w-full max-w-xl lg:pr-10">
             <a href="{{ route('home') }}" class="inline-flex items-center gap-3 text-[#2E7D32] font-extrabold text-2xl no-underline mb-12 w-fit">
                 <div class="w-12 h-12 rounded-xl flex items-center justify-center text-white shadow-md" style="background: linear-gradient(135deg, #4CAF50, #2E7D32);">
@@ -32,7 +30,6 @@
                 Fixora
             </a>
             
-            {{-- Ukuran Heading Diperbesar (text-5xl ke text-6xl) --}}
             <h1 class="text-5xl lg:text-6xl font-extrabold leading-tight text-gray-900 mb-10">
                 Gabung Fixora &amp;<br>Selamatkan <span class="text-[#2E7D32]">Gadgetmu</span>
             </h1>
@@ -59,8 +56,6 @@
             </div>
         </div>
 
-        {{-- ═════ BAGIAN KANAN (FORM) ═════ --}}
-        {{-- Lebar Kartu Diperbesar dari 460px ke 580px, Padding Diperbesar --}}
         <div class="w-full lg:w-[580px] shrink-0 bg-white rounded-[2rem] p-8 lg:p-14 border border-emerald-50" style="box-shadow: 0 20px 40px rgba(0,0,0,.04), 0 1px 3px rgba(0,0,0,.02);">
             <div class="w-full">
                 <h1 class="text-3xl font-extrabold text-center text-gray-800 mb-3">Masuk ke <span class="text-emerald-600">Fixora</span></h1>
@@ -75,7 +70,6 @@
 
                 <form method="POST" action="{{ route('login') }}" class="space-y-6">
                     @csrf
-                    {{-- Email --}}
                     <div class="flex flex-col gap-2">
                         <label for="email" class="text-[15px] font-semibold text-gray-700">Email</label>
                         <div class="relative">
@@ -87,7 +81,6 @@
                         @error('email') <span class="text-xs text-red-500 mt-1">{{ $message }}</span> @enderror
                     </div>
 
-                    {{-- Password --}}
                     <div class="flex flex-col gap-2">
                         <label for="password" class="text-[15px] font-semibold text-gray-700">Password</label>
                         <div class="relative">

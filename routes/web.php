@@ -2,10 +2,12 @@
 
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\DiagnosisController;
+use App\Http\Controllers\MarketplaceController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 
+use App\Http\Controllers\FixoraHubController;
 
 Route::get('/', function () {
     return view('user.home');
@@ -44,3 +46,6 @@ Route::post('/diagnosis/analyze', [DiagnosisController::class, 'analyze'])->name
 Route::get('/book-technician', [BookingController::class, 'index'])->name('booking.index');
 Route::post('/book-technician', [BookingController::class, 'store'])->name('booking.store');
 Route::get('/booking/success/{booking_id}', [BookingController::class, 'success'])->name('booking.success');
+Route::get('/marketplace', [MarketplaceController::class, 'index'])->name('marketplace.index');
+Route::get('/marketplace/{id}', [MarketplaceController::class, 'show'])->name('marketplace.detail');
+Route::get('/fixora-hub', [FixoraHubController::class, 'index'])->name('fixora-hub.index');

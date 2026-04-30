@@ -13,8 +13,8 @@
         <div class="hidden md:flex items-center gap-8">
             <a href="{{ route('home') }}" class="nav-link">Tentang Kami</a>
             <a href="{{ route('diagnosis.index') }}" class="nav-link">Diagnosis</a>
-            <a href="#hubs" class="nav-link">Fixora Hub</a>
-            <a href="#technicians" class="nav-link">Teknisi</a>
+            <a href="{{ route('fixora-hub.index') }}" class="nav-link">Fixora Hub</a>
+            <a href="{{ route('marketplace.index') }}" class="nav-link">Marketplace</a>
         </div>
 
         <div class="hidden md:flex items-center">
@@ -51,9 +51,8 @@
 
             <a href="{{ route('home') }}" class="mobile-link">Tentang Kami</a>
             <a href="{{ route('diagnosis.index') }}" class="mobile-link">Diagnosis</a>
-            <a href="#hubs" class="mobile-link">Fixora Hub</a>
-            <a href="#technicians" class="mobile-link">Teknisi</a>
-
+            <a href="{{ route('fixora-hub.index') }}" class="mobile-link">Fixora Hub</a>
+            <a href="{{ route('marketplace.index') }}" class="mobile-link">Marketplace</a>
             <a href="{{ route('login') }}"
                 class="mt-2 bg-gradient-to-r from-emerald-500 to-green-600 text-white px-4 py-2.5 rounded-full font-semibold flex items-center justify-center gap-2 shadow-md cursor-pointer">
                 Masuk / Daftar <i class="fa-solid fa-arrow-right text-xs"></i>

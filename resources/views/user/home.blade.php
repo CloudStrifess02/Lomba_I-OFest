@@ -278,9 +278,9 @@
                             class="bg-emerald-600 text-white px-10 py-4 md:px-12 md:py-5 rounded-full font-bold text-lg shadow-xl shadow-emerald-200 hover:bg-emerald-700 hover:-translate-y-1 transition-all">
                             Mulai Diagnosis AI
                         </a>
-                        <a href="#contact"
+                        <a href="{{ route('marketplace.index') }}"
                             class="bg-white text-emerald-600 border-2 border-emerald-600 px-10 py-4 md:px-12 md:py-5 rounded-full font-bold text-lg hover:bg-emerald-50 transition-all">
-                            Hubungi Tim Kami
+                            Jelajahi Marketplace
                         </a>
                     </div>
                 </div>

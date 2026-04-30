@@ -21,7 +21,7 @@
                 </div>
             </div>
 
-            <div class="bg-white/80 backdrop-blur-xl p-3 rounded-full shadow border flex flex-col md:flex-row gap-3 mb-12">
+            <div class="bg-white/80 backdrop-blur-xl p-3 rounded-xl md:rounded-full shadow border flex flex-col md:flex-row gap-3 mb-12">
 
                 {{-- SEARCH --}}
                 <div class="flex-grow relative flex items-center">
@@ -84,27 +84,22 @@
                 const search = searchInput.value;
                 const kota = cityFilter.value;
 
-                // Tampilkan loading, sembunyikan container & no data
                 storeContainer.style.opacity = '0.5';
                 loadingIndicator.classList.remove('hidden');
                 noDataMessage.classList.add('hidden');
 
-                // Gunakan Fetch API untuk memanggil Controller
-                // Pastikan route '/marketplace' sesuai dengan penamaan route kamu di web.php
                 fetch(`/marketplace?search=${encodeURIComponent(search)}&kota=${encodeURIComponent(kota)}`, {
                         headers: {
-                            'X-Requested-With': 'XMLHttpRequest', // Memberitahu Laravel ini request AJAX
+                            'X-Requested-With': 'XMLHttpRequest', 
                             'Accept': 'application/json'
                         }
                     })
                     .then(response => response.json())
                     .then(data => {
-                        // Masukkan HTML yang didapat dari partial view
                         storeContainer.innerHTML = data.html;
                         storeContainer.style.opacity = '1';
                         loadingIndicator.classList.add('hidden');
 
-                        // Tampilkan pesan kosong jika jumlah data 0
                         if (data.count === 0) {
                             storeContainer.classList.add('hidden');
                             noDataMessage.classList.remove('hidden');
@@ -119,20 +114,18 @@
                     });
             }
 
-            // Debounce untuk input text agar tidak query ke server setiap ketikan
             let timeout = null;
             searchInput.addEventListener('input', function() {
                 clearTimeout(timeout);
                 timeout = setTimeout(function() {
                     fetchStores();
-                }, 500); // Tunggu 0.5 detik setelah berhenti mengetik
+                }, 500); 
             });
 
             cityFilter.addEventListener('change', function() {
                 fetchStores();
             });
 
-            // Fungsi Reset
             window.resetFilters = function() {
                 searchInput.value = '';
                 fetchStores();

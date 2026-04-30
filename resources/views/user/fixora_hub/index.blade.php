@@ -22,7 +22,7 @@
                 </div>
             </div>
 
-            <div class="bg-white/80 backdrop-blur-xl p-3 rounded-full shadow border flex flex-col md:flex-row gap-3 mb-12">
+            <div class="bg-white/80 backdrop-blur-xl p-3 rounded-xl md:rounded-full shadow border flex flex-col md:flex-row gap-3 mb-12">
 
                 {{-- SEARCH --}}
                 <div class="flex-grow relative flex items-center">

@@ -11,10 +11,10 @@
         </a>
 
         <div class="hidden md:flex items-center gap-8">
-            <a href="{{ route('home') }}" class="nav-link">Tentang Kami</a>
-            <a href="{{ route('diagnosis.index') }}" class="nav-link">Diagnosis</a>
-            <a href="{{ route('fixora-hub.index') }}" class="nav-link">Fixora Hub</a>
-            <a href="{{ route('marketplace.index') }}" class="nav-link">Marketplace</a>
+            <a href="{{ route('home') }}" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}">Tentang Kami</a>
+            <a href="{{ route('diagnosis.index') }}" class="nav-link {{ request()->routeIs('diagnosis.*') ? 'active' : '' }}">Diagnosis</a>
+            <a href="{{ route('fixora-hub.index') }}" class="nav-link {{ request()->routeIs('fixora-hub.*') ? 'active' : '' }}">Fixora Hub</a>
+            <a href="{{ route('marketplace.index') }}" class="nav-link {{ request()->routeIs('marketplace.*') ? 'active' : '' }}">Marketplace</a>
         </div>
 
         <div class="hidden md:flex items-center">
@@ -49,14 +49,27 @@
         <div
             class="flex flex-col gap-4 mt-3 bg-white/80 backdrop-blur-lg p-4 rounded-2xl shadow-lg border border-emerald-100">
 
-            <a href="{{ route('home') }}" class="mobile-link">Tentang Kami</a>
-            <a href="{{ route('diagnosis.index') }}" class="mobile-link">Diagnosis</a>
-            <a href="{{ route('fixora-hub.index') }}" class="mobile-link">Fixora Hub</a>
-            <a href="{{ route('marketplace.index') }}" class="mobile-link">Marketplace</a>
-            <a href="{{ route('login') }}"
-                class="mt-2 bg-gradient-to-r from-emerald-500 to-green-600 text-white px-4 py-2.5 rounded-full font-semibold flex items-center justify-center gap-2 shadow-md cursor-pointer">
-                Masuk / Daftar <i class="fa-solid fa-arrow-right text-xs"></i>
-            </a>
+            <a href="{{ route('home') }}" class="mobile-link {{ request()->routeIs('home') ? 'active' : '' }}">Tentang Kami</a>
+            <a href="{{ route('diagnosis.index') }}" class="mobile-link {{ request()->routeIs('diagnosis.*') ? 'active' : '' }}">Diagnosis</a>
+            <a href="{{ route('fixora-hub.index') }}" class="mobile-link {{ request()->routeIs('fixora-hub.*') ? 'active' : '' }}">Fixora Hub</a>
+            <a href="{{ route('marketplace.index') }}" class="mobile-link {{ request()->routeIs('marketplace.*') ? 'active' : '' }}">Marketplace</a>
+            
+            @guest
+                <a href="{{ route('login') }}"
+                    class="mt-2 bg-gradient-to-r from-emerald-500 to-green-600 text-white px-4 py-2.5 rounded-full font-semibold flex items-center justify-center gap-2 shadow-md cursor-pointer">
+                    Masuk / Daftar <i class="fa-solid fa-arrow-right text-xs"></i>
+                </a>
+            @endguest
+
+            @auth
+                <form method="POST" action="{{ route('logout') }}" class="w-full">
+                    @csrf
+                    <button type="submit"
+                        class="w-full border border-red-200 text-red-600 hover:bg-red-50 px-4 py-2.5 rounded-full font-semibold flex items-center justify-center gap-2 shadow-sm transition-all cursor-pointer">
+                        Keluar <i class="fa-solid fa-right-from-bracket text-xs"></i>
+                    </button>
+                </form>
+            @endauth
 
         </div>
     </div>
@@ -83,6 +96,7 @@
         border-radius: 10px;
     }
 
+    /* Hover effect */
     .nav-link:hover {
         color: #059669;
     }
@@ -91,16 +105,35 @@
         width: 100%;
     }
 
+    /* Active State Desktop */
+    .nav-link.active {
+        color: #059669;
+        font-weight: 600; /* Sedikit lebih tebal untuk penekanan */
+    }
+
+    .nav-link.active::after {
+        width: 100%; /* Garis bawah permanen jika sedang aktif */
+    }
+
     .mobile-link {
         padding: 8px 10px;
         border-radius: 10px;
         transition: 0.2s;
         color: #475569;
+        font-weight: 500;
     }
 
+    /* Hover effect */
     .mobile-link:hover {
         background: #ecfdf5;
         color: #059669;
+    }
+
+    /* Active State Mobile */
+    .mobile-link.active {
+        background: #d1fae5; /* Emerald 100 */
+        color: #047857; /* Emerald 700 */
+        font-weight: 600;
     }
 </style>
 

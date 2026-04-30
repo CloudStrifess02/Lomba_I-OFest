@@ -18,16 +18,14 @@ return new class extends Migration
             $table->string('booking_id')->unique();
 
 
-            $table->foreignId('technician_id')->constrained('technicians')->onDelete('cascade');
+            $table->foreignId('toko_id')->constrained('toko')->onDelete('cascade');
+            $table->string('diag_id')->nullable();
 
-            $table->string('diag_id')->nullable(); 
-
-            // Detail Jadwal Kedatangan
-            $table->dateTime('schedule'); 
+            $table->dateTime('schedule');
 
             $table->text('address');
             $table->string('city')->nullable();
-            
+
             $table->text('notes')->nullable();
 
             $table->string('status')->default('pending');

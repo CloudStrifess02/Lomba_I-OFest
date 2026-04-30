@@ -31,10 +31,9 @@ class LoginController extends Controller
 
             $request->session()->regenerate();
 
-            return redirect()->intended(route('dashboard'));
+            return redirect()->intended(route('home'));
         }
 
-        // Jika gagal
         throw ValidationException::withMessages([
             'email' => 'Email atau password salah.',
         ]);
@@ -79,7 +78,7 @@ class LoginController extends Controller
 
             Auth::login($user);
 
-            return redirect()->intended(route('dashboard'));
+            return redirect()->intended(route('home'));
 
         } catch (\Exception $e) {
             return redirect()->route('login')->withErrors(['email' => 'Gagal login menggunakan Google. Silakan coba lagi.']);

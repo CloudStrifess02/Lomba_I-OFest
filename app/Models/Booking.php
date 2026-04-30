@@ -13,7 +13,7 @@ class Booking extends Model
     protected $fillable = [
         'booking_id',
         'user_id',
-        'technician_id',
+        'toko_id',
         'diag_id',
         'schedule',
         'address',
@@ -36,9 +36,25 @@ class Booking extends Model
     {
         return $this->belongsTo(User::class);
     }
+    public function toko()
+    {
+        return $this->belongsTo(Toko::class, 'toko_id');
+    }
 
-    public function isPending() { return $this->status === 'pending'; }
-    public function isConfirmed() { return $this->status === 'confirmed'; }
-    public function isProcessing() { return $this->status === 'processing'; }
-    public function isCompleted() { return $this->status === 'completed'; }
+    public function isPending()
+    {
+        return $this->status === 'pending';
+    }
+    public function isConfirmed()
+    {
+        return $this->status === 'confirmed';
+    }
+    public function isProcessing()
+    {
+        return $this->status === 'processing';
+    }
+    public function isCompleted()
+    {
+        return $this->status === 'completed';
+    }
 }

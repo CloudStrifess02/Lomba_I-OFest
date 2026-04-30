@@ -15,12 +15,7 @@
 <body>
 
     <div class="full-content" style="opacity: 1;">
-        @if (session()->has('user'))
-            @include('partials.navbar-user')
-        @else
-            @include('partials.navbar')
-        @endif
-
+        @include('partials.navbar')
         <main class="flex-grow">
             @yield('content')
         </main>

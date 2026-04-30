@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Technician;
+use App\Models\Toko; 
 use App\Models\Booking;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Auth; 
+use Illuminate\Support\Facades\Auth;
 
 class BookingController extends Controller
 {
@@ -19,12 +19,12 @@ class BookingController extends Controller
             'category' => $request->query('category'),
         ];
 
-        $technicians = Technician::with('user')
-            ->where('is_available', true)
+        // Perbaikan: Ganti 'kategoriToko' menjadi 'kategori' sesuai nama fungsi di Model Toko
+        $toko = Toko::with(['user', 'kategori'])
             ->orderBy('rating', 'desc')
             ->get();
 
-        return view('user.teknisi', compact('technicians', 'diagnosis'));
+        return view('user.teknisi', compact('toko', 'diagnosis'));
     }
 
     public function store(Request $request)
@@ -34,7 +34,7 @@ class BookingController extends Controller
         }
 
         $request->validate([
-            'technician_id' => 'required|exists:technicians,id',
+            'toko_id' => 'required|exists:toko,id', 
             'diag_id' => 'required',
             'schedule' => 'required|date|after:now',
             'address' => 'required|string|min:10',
@@ -45,10 +45,8 @@ class BookingController extends Controller
 
             $booking = new Booking();
             $booking->booking_id = $bookingId;
-            
             $booking->user_id = Auth::id(); 
-            
-            $booking->technician_id = $request->technician_id;
+            $booking->toko_id = $request->toko_id; 
             $booking->diag_id = $request->diag_id;
             $booking->schedule = $request->schedule;
             $booking->address = $request->address;
@@ -57,11 +55,11 @@ class BookingController extends Controller
             $booking->save();
 
             return redirect()->route('booking.success', ['booking_id' => $booking->booking_id])
-                             ->with('success', 'Booking berhasil dibuat!');
+                             ->with('success', 'Booking di toko berhasil dibuat!');
 
         } catch (\Exception $e) {
             Log::error("Booking Error: " . $e->getMessage());
-            return back()->withInput()->with('error', 'Gagal menyimpan booking: ' . $e->getMessage());
+            return back()->withInput()->with('error', 'Gagal menyimpan booking.');
         }
     }
 
@@ -69,7 +67,7 @@ class BookingController extends Controller
     {
         $booking = Booking::where('booking_id', $booking_id)
             ->where('user_id', Auth::id()) 
-            ->with(['technician.user', 'user'])
+            ->with(['toko.kategori', 'user']) // Mengambil data toko beserta kategorinya
             ->firstOrFail();
 
         return view('user.diagnosis', compact('booking'))->with('success', 'Booking berhasil dibuat!'); 
